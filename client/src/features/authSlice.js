@@ -38,7 +38,8 @@ const initialState = {
   loading:false,
   isAuthenticated: false,
   error: null,
-  isSuccess: false
+  isSuccess: false,
+  school: null
 }
 const authSlice = createSlice({
   name: "auth",
@@ -72,6 +73,20 @@ const authSlice = createSlice({
     })
     .addCase(loginUser.pending, (state)=>{
       state.loading = true
+    });
+
+    builder
+    .addCase(registerSchool.fulfilled, (state,action)=>{
+      state.school = action.payload
+      state.loading = false
+      state.isSuccess = true
+    })
+    .addCase(registerSchool.pending, (state,action)=>{
+      state.loading = true
+    })
+    .addCase(registerSchool.rejected, (state,action)=>{
+      state.loading = false
+      state.error = action.payload
     })
   }
 });

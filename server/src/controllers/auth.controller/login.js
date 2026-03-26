@@ -26,6 +26,9 @@ const loginUser = asyncHandler(async(req,res)=>{
   const user = await User.findOne({
     email : email
   });
+  if(user.schoolId !== schoolId){
+    throw new apiError(400, "User is not registered for this school");
+  }
   if(!user){
     throw new apiError(400, "User not found");
   }

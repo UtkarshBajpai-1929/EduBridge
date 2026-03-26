@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { generateSchoolId } from "../utils/generateSchoolId.js";
 const schoolSchema = new mongoose.Schema(
   {
@@ -10,7 +10,7 @@ const schoolSchema = new mongoose.Schema(
     schoolId: {
       type: String,
       required: true,
-      default: generateSchoolId,
+      default:  generateSchoolId,
       unique: true,
     },
     address:{
@@ -20,11 +20,7 @@ const schoolSchema = new mongoose.Schema(
     contact:{
       type:Number,
       required :true
-    },
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    }
   },
   { timestamps: true }
 );

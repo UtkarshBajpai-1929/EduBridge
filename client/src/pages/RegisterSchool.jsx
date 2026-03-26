@@ -1,37 +1,54 @@
-import React from 'react'
-import { useState } from "react";
+import React, { useState } from "react";
 import { GraduationCap } from "lucide-react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerSchool } from "../features/authSlice";
+import RegistrationSuccess from "../components/SchoolId";
+import Loader from "../components/Loader";
+
 export default function RegisterSchool() {
   const [form, setForm] = useState({
-    schoolName: "",
-    adminName: "",
+    name: "",
+    admin: "",
     email: "",
     password: "",
     address: "",
-    phone: "",
+    contact: "",
   });
+
+  const dispatch = useDispatch();
+  const { loading, school } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(form);
+    await dispatch(registerSchool(form));
   };
 
+  if (loading) return <Loader />;
+
+  if (school) {
+    return <RegistrationSuccess schoolId={school.schoolId} />;
+  }
+
   return (
-    <div className='bg-blue-50 flex flex-col justify-center items-center gap-4 py-10'>
-        <Link to="/">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="text-blue-500 w-7 h-7" />
-                <h1 className="text-center text-2xl font-bold text-gray-800">
-                  EduBridge
-                </h1>
-              </div>
-              </Link>
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
+    <div className="bg-blue-50 min-h-screen flex flex-col justify-center items-center gap-6 py-10 px-4">
+      
+      {/* Logo */}
+      <Link to="/">
+        <div className="flex items-center gap-2">
+          <GraduationCap className="text-blue-500 w-7 h-7" />
+          <h1 className="text-2xl font-bold text-gray-800">
+            EduBridge
+          </h1>
+        </div>
+      </Link>
+
+      {/* Form Card */}
       <div className="bg-white w-full max-w-2xl rounded-xl shadow-md p-6">
         
         {/* Heading */}
@@ -51,9 +68,9 @@ export default function RegisterSchool() {
             </label>
             <input
               type="text"
-              name="schoolName"
+              name="name"
               placeholder="Springfield High School"
-              value={form.schoolName}
+              value={form.name}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -68,9 +85,9 @@ export default function RegisterSchool() {
               </label>
               <input
                 type="text"
-                name="adminName"
+                name="admin"
                 placeholder="John Smith"
-                value={form.adminName}
+                value={form.admin}
                 onChange={handleChange}
                 required
                 className="w-full px-4 py-2 border rounded-lg"
@@ -125,16 +142,16 @@ export default function RegisterSchool() {
             />
           </div>
 
-          {/* Phone */}
+          {/* Contact */}
           <div>
             <label className="block font-medium mb-1">
               Contact Phone
             </label>
             <input
               type="text"
-              name="phone"
+              name="contact"
               placeholder="+1 (555) 123-4567"
-              value={form.phone}
+              value={form.contact}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg"
             />
@@ -145,7 +162,7 @@ export default function RegisterSchool() {
             Upon registration, you will receive a unique School ID that teachers and students will use to join your school on the platform.
           </div>
 
-          {/* Button */}
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition"
@@ -154,7 +171,6 @@ export default function RegisterSchool() {
           </button>
         </form>
       </div>
-    </div>
     </div>
   );
 }
