@@ -1,11 +1,14 @@
-import React from "react"
+import React, { use, useEffect } from "react"
 import AppRoutes from "./routes/AppRoutes"
+import { useDispatch } from "react-redux"
+import { getCurrentUser } from "./features/authSlice";
 function App() {
-  return (
-    <>
-    <AppRoutes/>
-    </>
-  )
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(getCurrentUser())
+  },[dispatch]);
+
+  return <AppRoutes/>
 }
 
 export default App

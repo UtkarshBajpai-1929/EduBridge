@@ -33,6 +33,28 @@ export const registerSchool = createAsyncThunk(
     }
   }
 ) 
+export const getCurrentUser = createAsyncThunk(
+  'auth/getCurrentUser',
+  async(_, thunkAPI)=>{
+    try {
+      const res = await API.get('/user/get-current-user')
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const logout = createAsyncThunk(
+  'auth/logout',
+  async(_, thunkAPI)=>{
+    try {
+      const res = await API.post('/user/logout')
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+)
 const initialState = {
   user:null,
   loading:false,
@@ -86,6 +108,35 @@ const authSlice = createSlice({
     })
     .addCase(registerSchool.rejected, (state,action)=>{
       state.loading = false
+      state.error = action.payload
+    });
+
+    builder
+    .addCase(getCurrentUser.fulfilled, (state,action)=>{
+      state.isAuthenticated = true
+      state.user = action.payload
+      state.loading = false
+    })
+     .addCase(getCurrentUser.rejected, (state,action)=>{
+      state.isAuthenticated = false
+      state.error = action.payload
+      state.loading = false
+    })
+      .addCase(getCurrentUser.pending, (state,action)=>{
+      state.isAuthenticated = false
+      state.loading = true
+    })
+
+    builder
+    .addCase(logout.fulfilled, (state)=>{
+      state.user = null
+      state.isAuthenticated = false
+      state.loading = false
+    })
+    .addCase(logout.pending, (state)=>{
+      state.loading = true
+    })
+    .addCase(logout.rejected, (state,action)=>{
       state.error = action.payload
     })
   }

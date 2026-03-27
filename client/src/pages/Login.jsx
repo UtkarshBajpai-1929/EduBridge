@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GraduationCap, Eye, EyeOff } from "lucide-react";
 import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from "../features/authSlice";
+import Loader from "../components/Loader";
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
@@ -26,15 +27,19 @@ export default function Login() {
   useEffect(()=>{
     if(user){
     if(user.role === "admin"){
-      navigate('/admin-dashboard')
+      navigate('/admin/dashboard')
     }else if(user.role === "teacher"){
-      navigate('/teacher-dashboard')
+      navigate('/teacher/dashboard')
     }else{
-      navigate('/student-dashboard')
+      navigate('/student/dashboard')
     }
   }
   },[user]);
+  if(loading){
+    return <Loader/>
+  }
   return (
+    <>
     <div className="min-h-screen bg-blue-50 flex flex-col justify-center items-center px-4">
       
    
@@ -133,5 +138,6 @@ export default function Login() {
         </p>
       </div>
     </div>
+    </>
   );
 }
