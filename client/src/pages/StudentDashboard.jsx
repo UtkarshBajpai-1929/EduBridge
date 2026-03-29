@@ -1,17 +1,16 @@
 import React from 'react'
 
-import { Video, MessageSquare, BookOpen } from "lucide-react";
+import { ClipboardList, MessageSquare, BookOpen } from "lucide-react";
 import { useSelector } from "react-redux";
 import WelcomeHeader from '../components/WelcomeHeader';
 import StatCard from '../components/StatCard';
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
-
+  console.log(user);
   return (
     <div>
 
-      {/* 🔹 Welcome Section */}
       <WelcomeHeader
         name={user?.name || "Student"}
         subtitle="Continue your learning journey"
@@ -19,14 +18,13 @@ const Dashboard = () => {
         onClick={() => console.log("Ask Doubt")}
       />
 
-      {/* 🔹 Stats Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
         <StatCard
-          title="Videos Watched"
-          value="24"
+          title="Class"
+          value={`${user?.className}th`}
           subtitle="+6 this week"
-          icon={<Video className="text-blue-600" />}
+          icon={< ClipboardList className="text-blue-600" />}
           bgColor="bg-blue-100"
         />
 

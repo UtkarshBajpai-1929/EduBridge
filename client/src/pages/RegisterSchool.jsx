@@ -25,7 +25,6 @@ export default function RegisterSchool() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
     await dispatch(registerSchool(form));
   };
 

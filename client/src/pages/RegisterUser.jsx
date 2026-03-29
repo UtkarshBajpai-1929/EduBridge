@@ -4,6 +4,7 @@ import { GraduationCap } from "lucide-react";
 import {useDispatch, useSelector} from "react-redux"
 import {Link, useNavigate} from 'react-router-dom'
 import {registerUser} from '../features/authSlice'
+import Loader from '../components/Loader';
 const Signup = () => {
   const [form, setForm] = useState({
     name: "",
@@ -26,11 +27,13 @@ const Signup = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     const result = await dispatch(registerUser(form));
-    console.log(result);
     if(result.meta.requestStatus === 'fulfilled'){
       navigate('/login');
     }
   };
+  if(loading){
+    return <Loader/>
+  }
   return (
     <div className='bg-blue-50 flex flex-col justify-center items-center gap-4 py-10'>
       <Link to="/">

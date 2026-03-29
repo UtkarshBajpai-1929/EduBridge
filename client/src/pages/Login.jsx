@@ -4,6 +4,7 @@ import { GraduationCap, Eye, EyeOff } from "lucide-react";
 import {useDispatch, useSelector} from 'react-redux'
 import { loginUser } from "../features/authSlice";
 import Loader from "../components/Loader";
+import { toast } from "react-toastify";
 export default function Login() {
   const [form, setForm] = useState({
     email: "",
@@ -19,9 +20,16 @@ export default function Login() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    dispatch(loginUser(form));
+      try {
+    const res = await dispatch(loginUser(form)).unwrap();
+    
+    toast.success("Login successful");
+
+  } catch (error) {
+    toast.error("Something Went Wrong");
+  }
   };
 
   useEffect(()=>{

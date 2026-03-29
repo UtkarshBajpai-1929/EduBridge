@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
-const StudentLayout = () => {
+import Sidebart from "./Sidebart";
+
+const TeacherLayout = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -22,7 +23,7 @@ const StudentLayout = () => {
         ${open ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static lg:w-64`}
       >
-        <Sidebar closeSidebar={() => setOpen(false)} />
+        <Sidebart closeSidebar={() => setOpen(false)} />
       </div>
 
       {/* Main Content */}
@@ -44,4 +45,4 @@ const StudentLayout = () => {
   );
 };
 
-export default StudentLayout;
+export default TeacherLayout;

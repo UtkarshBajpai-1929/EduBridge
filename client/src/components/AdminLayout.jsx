@@ -1,34 +1,28 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
-const StudentLayout = () => {
+import Sidebara from "./Sidebara";
+const AdminLayout = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-100">
 
-      {/* Overlay (mobile only) */}
       {open && (
         <div
           className="fixed inset-0 bg-black/40 z-40 lg:hidden"
           onClick={() => setOpen(false)}
         />
       )}
-
-      {/* Sidebar */}
       <div
         className={`fixed top-0 left-0 h-full w-full bg-white z-50 transform transition-transform duration-300
         ${open ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static lg:w-64`}
       >
-        <Sidebar closeSidebar={() => setOpen(false)} />
+        <Sidebara closeSidebar={() => setOpen(false)} />
       </div>
-
-      {/* Main Content */}
       <div className="flex-1 flex flex-col">
 
-        {/* Mobile Topbar (only menu button) */}
         <div className="lg:hidden p-4">
           <button onClick={() => setOpen(true)}>
             <Menu size={24} />
@@ -44,4 +38,4 @@ const StudentLayout = () => {
   );
 };
 
-export default StudentLayout;
+export default AdminLayout;
