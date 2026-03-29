@@ -13,8 +13,10 @@ export const createDoubt = asyncHandler(async (req, res) => {
     const uploadedImage = await uploadOnCloudinary(req.file.image[0].path);
     imageUrl = uploadedImage?.secure_url;
   }
-
-  if (!subject && !questionText && !imageUrl) {
+  if(!subject){
+    throw new apiError(400, "Subject is required");
+  }
+  if (!questionText && !imageUrl) {
     throw new apiError(400, "Doubt must contain text or image");
   }
 

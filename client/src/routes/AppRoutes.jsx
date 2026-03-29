@@ -13,6 +13,9 @@ import StudentVideo from "../pages/StudentVideo";
 import StudentDoubts from "../pages/StudentDoubts";
 import TeacherLayout from "../components/TeacherLayout";
 import AdminLayout from "../components/AdminLayout";
+import ManageUsers from "../pages/ManageUsers";
+import AdminDoubts from "../pages/AdminDoubts";
+import AdminVideos from "../pages/AdminVideos";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -30,6 +33,30 @@ const AppRoutes = () => {
         element={
           <ProtectedRoutes roles={["admin"]}>
             <AdminDashboard />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/admin/manage-users"
+        element={
+          <ProtectedRoutes roles={["admin"]}>
+            <ManageUsers />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/admin/doubts"
+        element={
+          <ProtectedRoutes roles={["admin"]}>
+            <AdminDoubts />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/admin/videos"
+        element={
+          <ProtectedRoutes roles={["admin"]}>
+            <AdminVideos />
           </ProtectedRoutes>
         }
       />

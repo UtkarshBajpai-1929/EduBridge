@@ -34,7 +34,7 @@ export const getAllTeachers = asyncHandler(async(req,res)=>{
     throw new apiError(400, "No teacher");
   }
   return res.status(200)
-  .json(new apiResponse(200, students, "Teacher fetched successfully"))
+  .json(new apiResponse(200, teachers, "Teacher fetched successfully"))
 });
 
 export const getAllDoubts = asyncHandler(async(req,res)=>{
@@ -44,11 +44,8 @@ export const getAllDoubts = asyncHandler(async(req,res)=>{
   const doubts = [...(await Doubt.find({
     schoolId:req.user?.schoolId
   }))]
-  if(!doubts){
-    throw new apiError(400, "0 Doubts");
-  }
   return res.status(200)
-  json(new apiResponse(200, doubts, "Doubts fetched"));
+  .json(new apiResponse(200, doubts, "Doubts fetched"));
 });
 
 export const getAllVideos = asyncHandler(async(req,res)=>{
@@ -62,5 +59,5 @@ export const getAllVideos = asyncHandler(async(req,res)=>{
     throw new apiError(400, "0 videos");
   }
   return res.status(200)
-  json(new apiResponse(200, videos, "videos fetched"));
+  .json(new apiResponse(200, videos, "videos fetched"));
 });

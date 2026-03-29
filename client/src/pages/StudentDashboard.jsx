@@ -7,7 +7,6 @@ import StatCard from '../components/StatCard';
 
 const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   return (
     <div>
 
