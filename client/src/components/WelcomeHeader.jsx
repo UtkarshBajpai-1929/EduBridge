@@ -7,7 +7,7 @@ const WelcomeHeader = ({ name, subtitle, buttonText, onClick }) => {
       
       <div>
         <h1 className="text-2xl md:text-3xl font-semibold">
-          Welcome back, {name}!
+          {name}
         </h1>
         <p className="text-gray-500 mt-1">{subtitle}</p>
       </div>

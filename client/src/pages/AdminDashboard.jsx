@@ -17,7 +17,7 @@ const AdminDashboard = () => {
     <div>
 
       <WelcomeHeader
-        name={user?.name|| "Admin"}
+        name={`Welcome back,${user?.name}`|| "Admin"}
         subtitle="Manage Functonalties for school"
         buttonText=""
         onClick={() =>{}}

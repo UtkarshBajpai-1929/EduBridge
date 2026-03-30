@@ -11,7 +11,7 @@ const Dashboard = () => {
     <div>
 
       <WelcomeHeader
-        name={user?.name || "Student"}
+        name={`Welcome back,${user?.name}` || "Student"}
         subtitle="Continue your learning journey"
         buttonText="Ask a Doubt"
         onClick={() => console.log("Ask Doubt")}
