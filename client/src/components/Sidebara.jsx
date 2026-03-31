@@ -8,6 +8,7 @@ import {
   GraduationCap,
   LogOut,
   User,
+  Book,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../features/authSlice";
@@ -15,6 +16,7 @@ import { logout } from "../features/authSlice";
 const menuItems = [
   { name: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
    { name: "Manage Users", path: "/admin/manage-users", icon: User },
+    { name: "Manage Subjects", path: "/admin/manage-subjects", icon: Book },
   { name: "Doubts", path: "/admin/doubts", icon: MessageSquare },
    { name: "Videos", path: "/admin/videos", icon: Video },
   { name: "Settings", path: "/student/settings", icon: Settings },
@@ -69,10 +71,10 @@ const Sidebara = ({ closeSidebar }) => {
         })}
       </div>
 
-      {/* 🔹 Bottom Section */}
+     
       <div className="px-4 py-4 border-t">
 
-        {/* Profile */}
+        
         <div className="flex items-center gap-3 px-2 mb-4">
           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-base font-semibold">
             {user?.name?.charAt(0) || "U"}
@@ -86,7 +88,7 @@ const Sidebara = ({ closeSidebar }) => {
           </div>
         </div>
 
-        {/* Logout */}
+       
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 w-full text-gray-600 hover:bg-gray-100 rounded-lg transition"

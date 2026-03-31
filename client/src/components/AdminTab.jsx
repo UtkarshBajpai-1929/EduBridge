@@ -10,9 +10,10 @@ const AdminTab = ({totalCount, studentCount, teacherCount, onClickStudent, onCli
 ];
   return (
     <div className="flex gap-10 items-center">
-      <div>
-     <p className="text-black fonr-semibold">
-        Filters 
+      <div className="flex items-center gap-1">
+        <Filter size={20}/>
+     <p className="text-black font-semibold">
+        Filters
       </p>
     </div>
     <div className="flex items-center w-fit gap-2 p-2 rounded-xl bg-white">
@@ -30,7 +31,7 @@ const AdminTab = ({totalCount, studentCount, teacherCount, onClickStudent, onCli
             className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200
               ${
                 isActive
-                  ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md"
+                  ? "bg-linear-to-r from-purple-500 to-indigo-500 text-white shadow-md"
                   : "text-gray-400 hover:text-black"
               }`}
           >

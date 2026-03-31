@@ -61,3 +61,16 @@ export const getAllVideos = asyncHandler(async(req,res)=>{
   return res.status(200)
   .json(new apiResponse(200, videos, "videos fetched"));
 });
+
+export const deleteUser= asyncHandler(async(req, res)=>{
+  const {userId} = req.params;
+  if(!req?.user){
+    throw new apiError(400, "Unauthorised request");
+  }
+  if(!userId){
+    throw new apiError(400, "No user to delete");
+  }
+  await User.findByIdAndDelete({_id: userId});
+  return res.status(200)
+  .json(new apiResponse(200, null, "Deletion successful"))
+});

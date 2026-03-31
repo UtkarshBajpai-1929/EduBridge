@@ -16,6 +16,7 @@ import AdminLayout from "../components/AdminLayout";
 import ManageUsers from "../pages/ManageUsers";
 import AdminDoubts from "../pages/AdminDoubts";
 import AdminVideos from "../pages/AdminVideos";
+import ManageSubjects from "../pages/ManageSubjects";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -41,6 +42,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoutes roles={["admin"]}>
             <ManageUsers />
+          </ProtectedRoutes>
+        }
+      />
+        <Route
+        path="/admin/manage-subjects"
+        element={
+          <ProtectedRoutes roles={["admin"]}>
+            <ManageSubjects/>
           </ProtectedRoutes>
         }
       />

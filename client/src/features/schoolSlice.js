@@ -35,13 +35,26 @@ export const getAllDoubts = createAsyncThunk(
    }
   }
 );
+
+export const deleteUser = createAsyncThunk(
+  'school/deleteUser',
+  async(userId, thunkAPI)=>{
+    try {
+      const res = await API.delete(`/school/delete-user/${userId}`)
+      return userId; 
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message)
+    }
+  }
+);
+
 const initialState = {
   students:null,
   teachers: null,
   doubts:null,
   videos:null,
   loading:false,
-  error:null
+  error:null,
 }
 const schoolSlice = createSlice({
   name: "school",
@@ -87,6 +100,14 @@ const schoolSlice = createSlice({
     .addCase(getAllDoubts.rejected, (state,action)=>{
       state.error = action.payload
       state.loading = false
+    });
+
+    builder
+    .addCase(deleteUser.fulfilled, (state,action)=>{
+      state.loading = false
+      const deletedId = action.payload;
+      state.students = state.students.filter(user => user._id !== deletedId);
+      state.teachers = state.teachers.filter(user => user._id !== deletedId);
     });
   }
 });
