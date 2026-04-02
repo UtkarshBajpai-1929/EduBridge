@@ -1,3 +1,4 @@
+import { Subject } from "../../models/subject.model.js";
 import { User } from "../../models/user.model.js";
 import { apiError } from "../../utils/apiError.js";
 import { apiResponse } from "../../utils/apiResponse.js";
@@ -11,13 +12,17 @@ const registerUser = asyncHandler(async(req,res)=>{
   if(!isSchoolIdPresent(schoolId)){
     throw new apiError(400, "No school found with this ID");
   }
+  const subjects = await Subject.find({
+    class: className
+  })
   const user = await User.create({
     name, 
     email,
     password,
     role,
     schoolId,
-    className
+    className,
+    subjects: subjects
   });
 
   return res.status(201)

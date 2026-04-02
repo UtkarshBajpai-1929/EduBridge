@@ -25,13 +25,17 @@ export const createSubject = asyncHandler(async (req, res) => {
 
 // Get Subjects by Class
 export const getSubjects = asyncHandler(async (req, res) => {
+  if(!req.user){
+    throw new apiError(401, "Unauthorised request")
+  }
   const { class: className } = req.query;
-
+  
   const subjects = await Subject.find({
     class: className,
     schoolId: req.user.schoolId,
     isActive: true,
   }).populate("teacher", "name email");
+
 
   return res
     .status(200)

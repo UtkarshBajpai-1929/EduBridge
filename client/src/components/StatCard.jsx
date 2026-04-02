@@ -1,7 +1,7 @@
 import React from "react";
-const StatCard = ({ title, value, subtitle, icon, bgColor }) => {
+const StatCard = ({ title, value, subtitle, icon, bgColor,bg }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-5 flex justify-between items-start">
+    <div className={`${bg} rounded-2xl shadow-sm p-5 flex justify-between items-start hover:scale-[1.01]`}>
       
       <div>
         <p className="text-gray-500 text-sm">{title}</p>

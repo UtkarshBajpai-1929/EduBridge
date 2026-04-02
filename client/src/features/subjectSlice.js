@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../api/api";
 export const addSubject = createAsyncThunk(
-  'school/addSubject',
+  'subject/addSubject',
   async(data, thunkAPI)=>{
     try {
       const res = await API.post('/subject/create', data);
@@ -28,6 +28,20 @@ export const deleteSubject = createAsyncThunk(
     try {
       const res = await API.delete(`/subject/delete/${id}`)
       return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const getSubjects = createAsyncThunk(
+  'subject/getSubjects',
+  async(className, thunkAPI)=>{
+    try {
+      const res = await API.get('/subject/get',{
+        params:{
+          class: className }
+      })
+      return res.data.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.message);
     }
@@ -59,6 +73,11 @@ const subjectSlice = createSlice({
     builder
     .addCase(deleteSubject.fulfilled, (state,action)=>{
       state.subjects = state.subjects.filter((s)=> s._id !== action.payload);
+    });
+
+    builder
+    .addCase(getSubjects.fulfilled, (state,action)=>{
+      state.subjects = action.payload;
     })
   }
 });
