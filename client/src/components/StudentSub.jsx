@@ -19,5 +19,4 @@ const StudentSub = ({name, teacher, className}) => {
     </div>
   )
 }
-
 export default StudentSub

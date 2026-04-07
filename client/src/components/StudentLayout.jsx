@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { Menu } from "lucide-react";
+import Footer from "./Footer";
 const StudentLayout = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-white">
 
       {/* Overlay (mobile only) */}
       {open && (
@@ -38,7 +39,6 @@ const StudentLayout = () => {
         <div className="flex-1 p-6 overflow-y-auto">
           <Outlet />
         </div>
-
       </div>
     </div>
   );

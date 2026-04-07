@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import hero from '../assets/hero.jpg'
+import hero from '../assets/hero_final_correct.png'
 import Spline from '@splinetool/react-spline';
 const Hero = () => {
   return (
@@ -27,7 +27,7 @@ const Hero = () => {
         </button>
         </Link>
       </div>
-         <Spline className='mt-8 pointer-events-none' scene="https://prod.spline.design/hWCWbP1helw2bNoV/scene.splinecode" />
+         <img className='mt-4' src={hero}/>
     </div>
   )
 }

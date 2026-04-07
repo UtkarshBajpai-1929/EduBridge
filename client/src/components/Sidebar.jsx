@@ -73,7 +73,10 @@ const Sidebar = ({ closeSidebar }) => {
         {/* Profile */}
         <div className="flex items-center gap-3 px-2 mb-4">
           <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-base font-semibold">
-            {user?.name?.charAt(0) || "U"}
+            {
+              user?.profileImage ? (<img className="object-cover w-10 h-10 rounded-full" src={user?.profileImage}/>) :
+              (user?.name?.charAt(0) || "U")
+            }
           </div>
 
           <div className="leading-tight">
