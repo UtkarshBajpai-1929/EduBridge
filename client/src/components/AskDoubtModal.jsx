@@ -10,6 +10,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
     subject: "",
+    teacherId: "",
     questionText: "",
     image: null,
   });
@@ -17,10 +18,21 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    const { name, value } = e.target;
+
+    if (name === "subject") {
+      const selectedSubject = subjects.find((s) => s._id === value);
+      setFormData((prev) => ({
+        ...prev,
+        subject: value,
+        teacherId: selectedSubject?.teacher?._id || "",
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleFileChange = (e) => {
@@ -36,6 +48,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
     const data = new FormData();
     data.append("title", formData.title);
     data.append("subject", formData.subject);
+    data.append("teacherId", formData.teacherId);
     data.append("questionText", formData.questionText);
     if (formData.image) data.append("image", formData.image);
 
@@ -44,9 +57,8 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
   };
 
   return (
-   <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex justify-center items-center z-50">
       <div className="bg-white w-[90%] sm:w-125 rounded-2xl p-6 shadow-lg relative">
-
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-black"
@@ -67,6 +79,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
             className="border p-2 rounded-md"
             required
           />
+
           <select
             name="subject"
             value={formData.subject}
@@ -81,6 +94,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
               </option>
             ))}
           </select>
+
           <label>Description: </label>
           <textarea
             name="questionText"

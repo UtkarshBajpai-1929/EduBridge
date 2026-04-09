@@ -19,7 +19,7 @@ const menuItems = [
     { name: "Manage Subjects", path: "/admin/manage-subjects", icon: Book },
   { name: "Doubts", path: "/admin/doubts", icon: MessageSquare },
    { name: "Videos", path: "/admin/videos", icon: Video },
-  { name: "Settings", path: "/student/settings", icon: Settings },
+  { name: "Settings", path: "/admin/settings", icon: Settings },
 ];
 
 const Sidebara = ({ closeSidebar }) => {

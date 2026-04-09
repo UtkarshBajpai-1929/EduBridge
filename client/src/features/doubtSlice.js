@@ -11,7 +11,17 @@ export const createDoubt = createAsyncThunk(
     }
   }
 );
-
+export const deleteDoubt = createAsyncThunk(
+  'doubt/deleteDoubt',
+  async(id, thunkAPI)=>{
+    try {
+      console.log("id: ",id);
+      return id;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+)
 export const getStudentDoubts = createAsyncThunk(
   'doubt/getStudentDoubts',
   async(_, thunkAPI)=>{
@@ -49,8 +59,12 @@ const doubtSlice = createSlice({
 
     builder
     .addCase(getStudentDoubts.fulfilled, (state,action)=>{
-      console.log(action.payload);
       state.doubts = action.payload
+    });
+
+    builder
+    .addCase(deleteDoubt.fulfilled, (state,action)=>{
+      state.doubts = state.doubts.filter((d)=> d._id !== action.payload);
     })
   }
 });

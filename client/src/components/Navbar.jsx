@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GraduationCap } from "lucide-react";
 const Navbar = () => {
   return (
-    <nav className="w-full opacity-90 bg-white z-50 shadow-sm sticky top-0 ">
+    <nav className="w-full opacity-99 bg-white z-50 shadow-sm sticky top-0 ">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         
         {/* Logo */}

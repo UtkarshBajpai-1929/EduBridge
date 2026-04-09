@@ -13,7 +13,11 @@ const doubtSchema = new mongoose.Schema(
       ref: "Subject",
       required: true,
     },
-
+    teacherId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true
+    },
     schoolId: {
       type: String,
       required: true,
@@ -26,7 +30,6 @@ const doubtSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-
     imageUrl: {
       type: String,
     },
