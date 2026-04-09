@@ -18,6 +18,8 @@ import AdminDoubts from "../pages/AdminDoubts";
 import AdminVideos from "../pages/AdminVideos";
 import ManageSubjects from "../pages/ManageSubjects";
 import Settings from "../pages/Settings";
+import TeacherDoubts from "../pages/TeacherDoubts";
+import TeacherVideos from "../pages/TeacherVideos";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -86,6 +88,22 @@ const AppRoutes = () => {
         element={
           <ProtectedRoutes roles={["teacher"]}>
             <TeacherDashboard />
+          </ProtectedRoutes>
+        }
+      />
+       <Route
+        path="/teacher/doubts"
+        element={
+          <ProtectedRoutes roles={["teacher"]}>
+            <TeacherDoubts />
+          </ProtectedRoutes>
+        }
+      />
+       <Route
+        path="/teacher/videos"
+        element={
+          <ProtectedRoutes roles={["teacher"]}>
+            <TeacherVideos />
           </ProtectedRoutes>
         }
       />

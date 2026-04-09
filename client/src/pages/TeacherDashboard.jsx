@@ -1,11 +1,88 @@
-import React from 'react'
+import React from "react";
 
-const TeacherDashboard = () => {
+import { Video, CheckCircle, Clock, Eye, Upload } from "lucide-react";
+import StatCard from "../components/StatCard";
+import { useSelector } from "react-redux";
+
+export default function Dashboard() {
+  const {user} = useSelector(state=>state.auth);
   return (
-    <div>
-      i am tracher dashboard
-    </div>
-  )
-}
+      <>
+      {/* Header */}
+      <div className="flex flex-col gap-4">
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">
+            Welcome back<span className="text-blue-600">,</span> {user?.name}
+          </h1>
+          <p className="text-gray-500 mt-1">
+            Here's what's happening with your teaching today
+          </p>
+        </div>
 
-export default TeacherDashboard
+        <button className="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl hover:opacity-90">
+          <Upload size={18} />
+          Upload Video
+        </button>
+      </div>
+
+      {/* Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <StatCard
+          title="Videos Uploaded"
+          value="0"
+          icon={<Video size={22} />}
+          bgColor="bg-blue-100"
+          iconColor="text-blue-600"
+          bg="bg-white"
+        />
+
+        <StatCard
+          title="Doubts Answered"
+          value="3"
+          icon={<CheckCircle size={22} />}
+          bgColor="bg-green-100"
+          iconColor="text-green-600"
+           bg="bg-white"
+        />
+
+        <StatCard
+          title="Pending Doubts"
+          value="2"
+          icon={<Clock size={22} />}
+          bgColor="bg-orange-100"
+           bg="bg-white"
+          iconColor="text-orange-600"
+        />
+
+        <StatCard
+          title="Total Views"
+          value="0"
+           bg="bg-white"
+          icon={<Eye size={22} />}
+          bgColor="bg-purple-100"
+          iconColor="text-purple-600"
+        />
+    </div>
+
+{/*Doubts...........................................................*/}
+      <div className="h-24 bg-white shadow-md w-full rounded p-4">
+        <div>
+        <h3 className="text-lg font-semibold">Recent Doubts</h3>
+        <p className="text-gray-500">Latest questions from students</p>
+        </div>
+      </div>
+
+
+{/*Videos...........................................................*/}
+      <div className="h-24 bg-white shadow-md w-full rounded p-4">
+        <div>
+        <h3 className="text-lg font-semibold">Recent Videos</h3>
+        <p className="text-gray-500">Your latest uploaded lecture videos</p>
+        </div>
+      </div>
+      </div>
+    </>
+  );
+}

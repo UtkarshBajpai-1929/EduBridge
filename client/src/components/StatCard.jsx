@@ -1,5 +1,5 @@
 import React from "react";
-const StatCard = ({ title, value, subtitle, icon, bgColor,bg }) => {
+const StatCard = ({ title, value, subtitle, icon, bgColor,bg, iconColor }) => {
   return (
     <div className={`${bg} rounded-2xl shadow-sm p-5 flex justify-between items-start hover:scale-[1.01]`}>
       
