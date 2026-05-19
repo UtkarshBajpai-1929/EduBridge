@@ -5,26 +5,25 @@ import { apiResponse } from "../utils/apiResponse.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const createDoubt = asyncHandler(async (req, res) => {
-  const { subject, questionText, title } = req.body;
+  const { subject, teacherId, questionText, title } = req.body;
 
-  let imageUrl;
-
-  if (req.file) {
-    const uploadedImage = await uploadOnCloudinary(req.file.image[0].path);
-    imageUrl = uploadedImage?.secure_url;
+  let doubtImage;
+  if (req.files?.image?.length > 0) {
+    const uploadedImage = await uploadOnCloudinary(req.files?.image[0]?.path);
+    doubtImage = uploadedImage?.secure_url;
   }
   if(!subject){
     throw new apiError(400, "Subject is required");
   }
-  if (!questionText && !imageUrl) {
+  if (!questionText && !image) {
     throw new apiError(400, "Doubt must contain text or image");
   }
-
   const doubt = await Doubt.create({
     student: req.user._id,
     subject,
+    teacherId,
     questionText,
-    imageUrl,
+    image: doubtImage,
     schoolId: req.user.schoolId,
     title,
   });
@@ -41,8 +40,7 @@ export const getStudentDoubts = asyncHandler(async(req,res)=>{
 
   const doubts =await Doubt.find({
     student: req.user?._id
-  }).populate("student subject", "name className");
-
+  }).populate("student subject", "name className")
   return res.status(200)
   .json(new apiResponse(200, doubts, "Doubts fetched successfully"));
 })
@@ -76,3 +74,29 @@ export const getSingleDoubt = asyncHandler(async (req, res) => {
     .status(200)
     .json(new apiResponse(200, doubt, "Doubt fetched successfully"));
 });
+
+//delete doubt
+  export const deleteDoubt = asyncHandler(async(req, res)=>{
+    const {id} = req.params;
+    if(!req?.user){
+      throw new apiError(401, "Doubt not found")
+    }
+    await Doubt.findByIdAndDelete({
+      _id: id
+    });
+    return res.status(200)
+    .json(200, null, "Doubt deleted successfully");
+  });
+
+  //get teacher doubt: 
+
+  export const getTeacherDoubts = asyncHandler(async(req, res)=>{
+    if(!req.user){
+      throw new apiError(401, "Unauthorised request");
+    }
+    const doubts = await Doubt.find({
+      teacherId: req.user?._id
+    }).populate("student subject",)
+    return res.status(200)
+    .json(new apiResponse(200, doubts, "Teacher doubts fetched successfully"))
+  })

@@ -12,12 +12,11 @@ const StudentDoubts = () => {
 
   const { subjects } = useSelector(state => state.subject)
   const { doubts } = useSelector(state => state.doubt)
-
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getStudentDoubts())
-  }, [dispatch])
+  }, [dispatch,doubts])
 
   const filteredDoubts = useMemo(() => {
     return doubts?.filter(d => {
@@ -99,7 +98,7 @@ const StudentDoubts = () => {
       <div className='flex flex-col gap-4'>
         {
           filteredDoubts?.map((d) => {
-            const imageSrc = d.imageUrl || student
+            const imageSrc = d?.image || student
 
             return (
               <div key={d._id} className='flex flex-col px-4 py-4 shadow-sm rounded bg-white'>
@@ -147,7 +146,11 @@ const StudentDoubts = () => {
                     )
                   }
 
-                  <button className='border border-gray-600 rounded px-4 py-1 hover:bg-gray-100'>
+                  <button
+                  onClick={()=>{
+                  
+                  }}
+                  className='border border-gray-600 rounded px-4 py-1 hover:bg-gray-100'>
                     View Solution
                   </button>
                 </div>

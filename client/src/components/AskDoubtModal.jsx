@@ -5,7 +5,9 @@ import { createDoubt } from "../features/doubtSlice";
 
 const AskDoubtModal = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
+
   const { subjects } = useSelector((state) => state.subject);
+  const { loading } = useSelector((state) => state.doubt);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -22,6 +24,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
 
     if (name === "subject") {
       const selectedSubject = subjects.find((s) => s._id === value);
+
       setFormData((prev) => ({
         ...prev,
         subject: value,
@@ -42,18 +45,25 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const data = new FormData();
+
     data.append("title", formData.title);
     data.append("subject", formData.subject);
     data.append("teacherId", formData.teacherId);
     data.append("questionText", formData.questionText);
-    if (formData.image) data.append("image", formData.image);
 
-    dispatch(createDoubt(data));
-    onClose();
+    if (formData.image) {
+      data.append("image", formData.image);
+    }
+
+    const result = await dispatch(createDoubt(data));
+
+    if (createDoubt.fulfilled.match(result)) {
+      onClose();
+    }
   };
 
   return (
@@ -69,7 +79,8 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
         <h2 className="text-xl font-bold mb-4">Ask a Doubt</h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <label>Title: </label>
+          <label>Title:</label>
+
           <input
             type="text"
             name="title"
@@ -88,6 +99,7 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
             required
           >
             <option value="">Select Subject</option>
+
             {subjects?.map((s) => (
               <option key={s._id} value={s._id}>
                 {s.name}
@@ -95,7 +107,8 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
             ))}
           </select>
 
-          <label>Description: </label>
+          <label>Description:</label>
+
           <textarea
             name="questionText"
             placeholder="Describe your doubt..."
@@ -105,7 +118,8 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
             required
           />
 
-          <label>Image: </label>
+          <label>Image:</label>
+
           <input
             type="file"
             onChange={handleFileChange}
@@ -114,9 +128,14 @@ const AskDoubtModal = ({ isOpen, onClose }) => {
 
           <button
             type="submit"
-            className="bg-black text-white py-2 rounded-md hover:bg-gray-800"
+            disabled={loading}
+            className={`py-2 rounded-md text-white transition ${
+              loading
+                ? "bg-gray-600 cursor-not-allowed"
+                : "bg-black hover:bg-gray-800"
+            }`}
           >
-            Submit Doubt
+            {loading ? "Creating..." : "Submit Doubt"}
           </button>
         </form>
       </div>

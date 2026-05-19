@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Video, CheckCircle, Clock, Eye, Upload } from "lucide-react";
 import StatCard from "../components/StatCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeacherDoubts } from "../features/doubtSlice";
+import Doubt from "../components/doubt";
 
 export default function Dashboard() {
+  const dispatch = useDispatch();
+  const {doubts} = useSelector(state => state.doubt)
   const {user} = useSelector(state=>state.auth);
+  useEffect(()=>{
+    dispatch(getTeacherDoubts())
+  },[dispatch]);
+  let pendingDoubts = 0;
+  if(doubts){
+     pendingDoubts = doubts.filter((d)=> d.status === "open");
+  }
+ 
   return (
       <>
       {/* Header */}
@@ -40,7 +52,7 @@ export default function Dashboard() {
 
         <StatCard
           title="Doubts Answered"
-          value="3"
+          value={doubts?.length - pendingDoubts?.length}
           icon={<CheckCircle size={22} />}
           bgColor="bg-green-100"
           iconColor="text-green-600"
@@ -49,7 +61,7 @@ export default function Dashboard() {
 
         <StatCard
           title="Pending Doubts"
-          value="2"
+          value={pendingDoubts?.length}
           icon={<Clock size={22} />}
           bgColor="bg-orange-100"
            bg="bg-white"
@@ -67,10 +79,20 @@ export default function Dashboard() {
     </div>
 
 {/*Doubts...........................................................*/}
-      <div className="h-24 bg-white shadow-md w-full rounded p-4">
+      <div className="bg-white shadow-md w-full rounded p-4">
         <div>
         <h3 className="text-lg font-semibold">Recent Doubts</h3>
         <p className="text-gray-500">Latest questions from students</p>
+        </div>
+        <div>
+        {
+          pendingDoubts.slice(0,3).map(d=> <Doubt
+          name={d.student?.name}
+          grade={d.student?.className}
+          title={d.title}
+          subject={d.subject?.name}
+          />)
+        }
         </div>
       </div>
 

@@ -30,7 +30,7 @@ const doubtSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    imageUrl: {
+    image: {
       type: String,
     },
 
