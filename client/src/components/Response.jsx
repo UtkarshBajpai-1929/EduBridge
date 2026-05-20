@@ -23,9 +23,14 @@ export default function ResponseModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const data = new FormData();
+    data.append("text", formData.text)
+    data.append("doubtId", doubtId)
+    if(formData.image) data.append("image", formData.image)
+    if(formData.image) data.append("video", formData.video)
+      console.log(data);
     const result = await dispatch(
-      createResponse({ ...formData, doubtId })
+      createResponse(data)
     );
 
     if (createResponse.fulfilled.match(result)) {

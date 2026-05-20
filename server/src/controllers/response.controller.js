@@ -9,7 +9,6 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 // Create Response (text / image / video)
 export const createResponse = asyncHandler(async (req, res) => {
   const { doubtId, text } = req.body;
-
   if (!doubtId) {
     throw new apiError(400, "Doubt id is required");
   }
@@ -22,7 +21,6 @@ export const createResponse = asyncHandler(async (req, res) => {
 
   let imageUrl;
   let videoUrl;
-
   // image upload
   if (req.files?.image?.length) {
     const uploadedImage = await uploadOnCloudinary(req.files.image[0].path);
@@ -59,7 +57,7 @@ export const createResponse = asyncHandler(async (req, res) => {
 
 // Get responses of a doubt
 export const getResponses = asyncHandler(async (req, res) => {
-  const { doubtId } = req.query;
+  const { doubtId } = req.params;
 
   if (!doubtId) {
     throw new apiError(400, "Doubt id required");

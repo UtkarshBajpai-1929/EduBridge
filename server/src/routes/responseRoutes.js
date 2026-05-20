@@ -23,14 +23,14 @@ responseRouter
     createResponse
   );
   responseRouter
-  .route('/:doubtId')
+  .route('/get/:doubtId')
   .get(
     verifyJwt,
     getResponses
   );
 
 responseRouter
-  .route("/:id")
+  .route("delete/:id")
   .delete(
     verifyJwt,
     deleteResponse

@@ -3,7 +3,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteDoubt, getStudentDoubts } from '../features/doubtSlice'
 import student from '../assets/student.jpg'
-
+import { getResponse } from '../features/responseSlice'
+import { useNavigate } from 'react-router-dom'
 const StudentDoubts = () => {
   const [value, setValue] = useState("All")
   const [selectedImage, setSelectedImage] = useState(null)
@@ -12,8 +13,9 @@ const StudentDoubts = () => {
 
   const { subjects } = useSelector(state => state.subject)
   const { doubts } = useSelector(state => state.doubt)
+  const {singleResponse} = useSelector(state => state.response)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getStudentDoubts())
   }, [dispatch,doubts])
@@ -148,7 +150,8 @@ const StudentDoubts = () => {
 
                   <button
                   onClick={()=>{
-                  console.log("Youo are viewing solution for the doubt: ",d._id)
+                    navigate('/student/response')
+                    dispatch(getResponse(d._id))
                   }}
                   className={`${d.status === "resolved" ? " border border-gray-600 rounded px-4 py-1 hover:bg-gray-100" : "hidden"}`}>
                     View Solution

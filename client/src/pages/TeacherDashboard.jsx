@@ -86,7 +86,7 @@ export default function Dashboard() {
         </div>
         <div>
         {
-          pendingDoubts.slice(0,3).map(d=> <Doubt
+          pendingDoubts.slice(0,3).toReversed().map(d=> <Doubt
           name={d.student?.name}
           grade={d.student?.className}
           title={d.title}

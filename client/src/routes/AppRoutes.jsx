@@ -20,6 +20,7 @@ import ManageSubjects from "../pages/ManageSubjects";
 import Settings from "../pages/Settings";
 import TeacherDoubts from "../pages/TeacherDoubts";
 import TeacherVideos from "../pages/TeacherVideos";
+import StudentResponse from "../pages/StudentResponse";
 const AppRoutes = () => {
   return (
     <Routes>
@@ -143,6 +144,15 @@ const AppRoutes = () => {
             <ProtectedRoutes roles={["student"]}>
               {" "}
               <StudentDoubts />
+            </ProtectedRoutes>
+          }
+        />
+         <Route
+          path="/student/response"
+          element={
+            <ProtectedRoutes roles={["student"]}>
+              {" "}
+              <StudentResponse/>
             </ProtectedRoutes>
           }
         />

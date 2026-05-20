@@ -10,8 +10,21 @@ export const createResponse = createAsyncThunk(
       return thunkAPI.rejectWithValue(error.response.data.message)
     }
   }
+);
+export const getResponse = createAsyncThunk(
+  "response/getRespone",
+  async(id, thunkAPI)=>{
+    try {
+      console.log(id);
+      const res =await API.get(`/response/get/${id}`)
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
 )
 const initialState = {
+  singleResponse : null,
   responses : [],     
   loading:false,
   error: null
@@ -32,6 +45,11 @@ const responseSlice = createSlice({
     })
     .addCase(createResponse.pending, (state)=>{
       state.loading = true
+    })
+
+    builder
+    .addCase(getResponse.fulfilled, (state, action)=>{
+      state.singleResponse = action.payload
     })
   }
 })
