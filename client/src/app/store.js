@@ -3,6 +3,7 @@ import { authReducer } from "../features/authSlice";
 import { schoolReducer } from "../features/schoolSlice";
 import { subjectReducer } from "../features/subjectSlice";
 import { doubtReducer } from "../features/doubtSlice";
+import { responseReducer } from "../features/responseSlice";
 
 export const store = configureStore({
   reducer:{
@@ -10,5 +11,6 @@ export const store = configureStore({
     school: schoolReducer,
     subject: subjectReducer,
     doubt: doubtReducer,
+    response: responseReducer,
   }
 });

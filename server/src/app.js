@@ -6,6 +6,7 @@ import userRouter from "./routes/userRoutes.js";
 import { subjectRouter } from "./routes/subjectRoutes.js";
 import { videoRouter } from "./routes/videoRotes.js";
 import { doubtRouter } from "./routes/doubtRoutes.js";
+import {responseRouter} from "./routes/responseRoutes.js";
 const app = express();
 
 app.use(cors({
@@ -22,4 +23,5 @@ app.use('/api/user', userRouter);
 app.use('/api/subject', subjectRouter);
 app.use('/api/video', videoRouter);
 app.use('/api/doubt', doubtRouter);
+app.use('/api/response', responseRouter);
 export default app;

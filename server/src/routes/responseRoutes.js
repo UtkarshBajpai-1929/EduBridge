@@ -5,16 +5,16 @@ import {
   deleteResponse
 } from "../controllers/response.controller.js";
 
-import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { authorizeRoles } from "../middlewares/role.middleware.js";
-import { upload } from "../middlewares/multer.middleware.js";
+import { verifyJwt } from "../middlewares/auth.js";
+import { authorizeRoles } from "../middlewares/roleAuth.js";
+import { upload } from "../middlewares/multer.js";
 
-const responseRouter = Router();
+export const responseRouter = Router();
 
 responseRouter
-  .route("/")
+  .route("/create")
   .post(
-    verifyJWT,
+    verifyJwt,
     authorizeRoles("teacher"),
     upload.fields([
       { name: "image", maxCount: 1 },
@@ -25,15 +25,13 @@ responseRouter
   responseRouter
   .route('/:doubtId')
   .get(
-    verifyJWT,
+    verifyJwt,
     getResponses
   );
 
 responseRouter
   .route("/:id")
   .delete(
-    verifyJWT,
+    verifyJwt,
     deleteResponse
   );
-
-export default responseRouter;

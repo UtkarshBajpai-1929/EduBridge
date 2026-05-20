@@ -97,7 +97,7 @@ const StudentDoubts = () => {
 
       <div className='flex flex-col gap-4'>
         {
-          filteredDoubts?.map((d) => {
+          filteredDoubts?.toReversed().map((d) => {
             const imageSrc = d?.image || student
 
             return (
@@ -148,9 +148,9 @@ const StudentDoubts = () => {
 
                   <button
                   onClick={()=>{
-                  
+                  console.log("Youo are viewing solution for the doubt: ",d._id)
                   }}
-                  className='border border-gray-600 rounded px-4 py-1 hover:bg-gray-100'>
+                  className={`${d.status === "resolved" ? " border border-gray-600 rounded px-4 py-1 hover:bg-gray-100" : "hidden"}`}>
                     View Solution
                   </button>
                 </div>
