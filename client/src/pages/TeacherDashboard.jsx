@@ -4,7 +4,7 @@ import { Video, CheckCircle, Clock, Eye, Upload } from "lucide-react";
 import StatCard from "../components/StatCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherDoubts } from "../features/doubtSlice";
-import Doubt from "../components/doubt";
+import Doubt from "../components/Doubt";
 import UploadVideoModal from "../components/uploadVideoModal";
 import Loader from "../components/Loader";
 
