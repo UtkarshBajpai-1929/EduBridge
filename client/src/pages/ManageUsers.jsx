@@ -15,7 +15,7 @@ const ManageUsers = () => {
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
-  const {students,teachers} = useSelector(state=>state.school);
+  const {students = [],teachers = []} = useSelector(state=>state.school);
   const {user} = useSelector(state=>state.auth);
 
   const data = React.useMemo(() => {

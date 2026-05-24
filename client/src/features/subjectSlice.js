@@ -33,6 +33,17 @@ export const deleteSubject = createAsyncThunk(
     }
   }
 );
+export const updateSubject = createAsyncThunk(
+  'subject/updateSubject',
+  async({ id, data }, thunkAPI)=>{
+    try {
+      const res = await API.patch(`/subject/update/${id}`, data)
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to update subject");
+    }
+  }
+);
 export const getSubjects = createAsyncThunk(
   'subject/getSubjects',
   async(className, thunkAPI)=>{
@@ -73,6 +84,11 @@ const subjectSlice = createSlice({
     builder
     .addCase(deleteSubject.fulfilled, (state,action)=>{
       state.subjects = state.subjects.filter((s)=> s._id !== action.payload);
+    });
+
+    builder
+    .addCase(updateSubject.fulfilled, (state,action)=>{
+      state.subjects = state.subjects.map((s)=> s._id === action.payload._id ? action.payload : s);
     });
 
     builder

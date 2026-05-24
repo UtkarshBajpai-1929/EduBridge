@@ -55,6 +55,50 @@ export const logout = createAsyncThunk(
     }
   }
 )
+export const updateProfile = createAsyncThunk(
+  'auth/updateProfile',
+  async(data, thunkAPI)=>{
+    try {
+      const res = await API.patch('/user/update-profile', data)
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to update profile");
+    }
+  }
+)
+export const updatePassword = createAsyncThunk(
+  'auth/updatePassword',
+  async(data, thunkAPI)=>{
+    try {
+      const res = await API.patch('/user/update-password', data)
+      return res.data.message
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to update password");
+    }
+  }
+)
+export const uploadProfileImage = createAsyncThunk(
+  'auth/uploadProfileImage',
+  async(data, thunkAPI)=>{
+    try {
+      const res = await API.post('/user/upload-profile', data)
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to upload profile image");
+    }
+  }
+)
+export const deleteAccount = createAsyncThunk(
+  'auth/deleteAccount',
+  async(_, thunkAPI)=>{
+    try {
+      const res = await API.delete('/user/delete-me')
+      return res.data.message
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to delete account");
+    }
+  }
+)
 const initialState = {
   user:null,
   loading:false,
@@ -135,6 +179,62 @@ const authSlice = createSlice({
       state.loading = true
     })
     .addCase(logout.rejected, (state,action)=>{
+      state.error = action.payload
+    })
+
+    builder
+    .addCase(updateProfile.fulfilled, (state,action)=>{
+      state.user = action.payload
+      state.loading = false
+      state.error = null
+    })
+    .addCase(updateProfile.pending, (state)=>{
+      state.loading = true
+    })
+    .addCase(updateProfile.rejected, (state,action)=>{
+      state.loading = false
+      state.error = action.payload
+    })
+
+    builder
+    .addCase(updatePassword.fulfilled, (state)=>{
+      state.loading = false
+      state.error = null
+    })
+    .addCase(updatePassword.pending, (state)=>{
+      state.loading = true
+    })
+    .addCase(updatePassword.rejected, (state,action)=>{
+      state.loading = false
+      state.error = action.payload
+    })
+
+    builder
+    .addCase(uploadProfileImage.fulfilled, (state,action)=>{
+      state.user = action.payload
+      state.loading = false
+      state.error = null
+    })
+    .addCase(uploadProfileImage.pending, (state)=>{
+      state.loading = true
+    })
+    .addCase(uploadProfileImage.rejected, (state,action)=>{
+      state.loading = false
+      state.error = action.payload
+    })
+
+    builder
+    .addCase(deleteAccount.fulfilled, (state)=>{
+      state.user = null
+      state.isAuthenticated = false
+      state.loading = false
+      state.error = null
+    })
+    .addCase(deleteAccount.pending, (state)=>{
+      state.loading = true
+    })
+    .addCase(deleteAccount.rejected, (state,action)=>{
+      state.loading = false
       state.error = action.payload
     })
   }

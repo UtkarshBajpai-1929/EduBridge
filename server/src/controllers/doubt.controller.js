@@ -85,7 +85,7 @@ export const getSingleDoubt = asyncHandler(async (req, res) => {
       _id: id
     });
     return res.status(200)
-    .json(200, null, "Doubt deleted successfully");
+    .json(new apiResponse(200, null, "Doubt deleted successfully"));
   });
 
   //get teacher doubt: 

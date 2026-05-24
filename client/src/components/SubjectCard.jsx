@@ -8,7 +8,9 @@ const SubjectCard = ({ id, name, className, teacher, onEdit }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteSubject(id))
+    if(window.confirm("Delete this subject?")){
+      dispatch(deleteSubject(id))
+    }
   };
 
   return (
@@ -33,7 +35,7 @@ const SubjectCard = ({ id, name, className, teacher, onEdit }) => {
       <div className="flex gap-3 flex-wrap">
 
         <button
-          onClick={() => onEdit(id)}
+          onClick={() => onEdit?.(id)}
           className="flex items-center gap-1 px-3 py-1 text-sm rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-800 hover:text-white transition"
         >
           <Pencil size={14} />

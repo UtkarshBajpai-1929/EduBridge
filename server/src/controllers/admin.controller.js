@@ -43,7 +43,11 @@ export const getAllDoubts = asyncHandler(async(req,res)=>{
   }
   const doubts = [...(await Doubt.find({
     schoolId:req.user?.schoolId
-  }))]
+  })
+    .populate("student", "name email className profileImage")
+    .populate("subject", "name class")
+    .populate("teacherId", "name email")
+    .sort({ createdAt: -1 }))]
   return res.status(200)
   .json(new apiResponse(200, doubts, "Doubts fetched"));
 });
@@ -54,7 +58,9 @@ export const getAllVideos = asyncHandler(async(req,res)=>{
   }
   const videos = [...(await Video.find({
     schoolId:req.user?.schoolId
-  }))]
+  })
+    .populate("teacher", "name email profileImage")
+    .sort({ createdAt: -1 }))]
   if(!videos){
     throw new apiError(400, "0 videos");
   }

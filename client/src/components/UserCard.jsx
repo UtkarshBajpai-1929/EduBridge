@@ -7,7 +7,9 @@ const UserCard = ({ name, email, role, profile, userId, onView }) => {
   const dispatch = useDispatch();
 
   const handleDelete = ()=>{
-    dispatch(deleteUser(userId));
+    if(window.confirm("Delete this user?")){
+      dispatch(deleteUser(userId));
+    }
   }
 
   const getInitials = (name) => {

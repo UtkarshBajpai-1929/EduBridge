@@ -32,6 +32,16 @@ export const getStudentVideos = createAsyncThunk(
     }
   }
 )
+export const getAllVideos = createAsyncThunk(
+  "video/getAllVideos", async(_, thunkAPI)=>{
+    try {
+      const res = await API.get('/school/get-videos')
+      return res.data.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message || "Failed to fetch videos")
+    }
+  }
+)
 export const deleteVideo = createAsyncThunk(
   "video/deleteVideo", async(id, thunkAPI)=>{
     try {
@@ -75,6 +85,19 @@ const videoSlice = createSlice({
       state.error = action.payload
     })
     .addCase(getTeacherVideos.pending, (state)=>{
+      state.loading = true
+    })
+
+    builder
+    .addCase(getAllVideos.fulfilled, (state,action)=>{
+      state.video = action.payload
+      state.loading = false
+    })
+    .addCase(getAllVideos.rejected, (state, action)=>{
+      state.error = action.payload
+      state.loading = false
+    })
+    .addCase(getAllVideos.pending, (state)=>{
       state.loading = true
     })
 

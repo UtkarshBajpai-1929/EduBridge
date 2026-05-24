@@ -55,12 +55,19 @@ export const getAllSubjects = asyncHandler(async (req, res) => {
 // Update Subject
 export const updateSubject = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const { name, class: className, teacher } = req.body;
 
   const subject = await Subject.findByIdAndUpdate(
     id,
-    req.body,
-    { new: true }
-  );
+    {
+      $set: {
+        ...(name && { name }),
+        ...(className && { class: className }),
+        ...(teacher && { teacher }),
+      },
+    },
+    { new: true, runValidators: true }
+  ).populate("teacher", "name email");
 
   if (!subject) {
     throw new apiError(404, "Subject not found");

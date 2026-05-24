@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTeachers } from "../features/schoolSlice";
 
-const AddSubjectModal = ({ onClose, onSubmit }) => {
+const AddSubjectModal = ({ onClose, onSubmit, initialSubject }) => {
   const [form, setForm] = useState({
-    name: "",
-    class: "",
-    teacher: "",
+    name: initialSubject?.name || "",
+    class: initialSubject?.class || "",
+    teacher: initialSubject?.teacher?._id || "",
   });
 
   const { teachers } = useSelector((state) => state.school);
@@ -37,7 +37,7 @@ const AddSubjectModal = ({ onClose, onSubmit }) => {
       <div className="relative bg-white w-[90%] max-w-md rounded-2xl shadow-lg p-6 z-50">
 
         <h2 className="text-xl font-semibold mb-4 text-gray-800">
-          Add Subject
+          {initialSubject ? "Edit Subject" : "Add Subject"}
         </h2>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -103,7 +103,7 @@ const AddSubjectModal = ({ onClose, onSubmit }) => {
               type="submit"
               className="px-4 py-2 rounded-lg bg-purple-500 text-white hover:bg-purple-600"
             >
-              Add
+              {initialSubject ? "Save" : "Add"}
             </button>
           </div>
 

@@ -49,10 +49,10 @@ export const deleteUser = createAsyncThunk(
 );
 
 const initialState = {
-  students:null,
-  teachers: null,
-  doubts:null,
-  videos:null,
+  students:[],
+  teachers: [],
+  doubts:[],
+  videos:[],
   loading:false,
   error:null,
 }
