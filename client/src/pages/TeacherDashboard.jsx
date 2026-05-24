@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Video, CheckCircle, Clock, Eye, Upload } from "lucide-react";
 import StatCard from "../components/StatCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeacherDoubts } from "../features/doubtSlice";
 import Doubt from "../components/doubt";
+import UploadVideoModal from "../components/uploadVideoModal";
+import Loader from "../components/Loader";
 
 export default function Dashboard() {
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const {doubts} = useSelector(state => state.doubt)
   const {user} = useSelector(state=>state.auth);
+  const {loading} = useSelector(state=> state.video);
   useEffect(()=>{
     dispatch(getTeacherDoubts())
   },[dispatch]);
@@ -17,7 +21,9 @@ export default function Dashboard() {
   if(doubts){
      pendingDoubts = doubts.filter((d)=> d.status === "open");
   }
- 
+  if(loading){
+    return<Loader/>
+  }
   return (
       <>
       {/* Header */}
@@ -32,7 +38,11 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl hover:opacity-90">
+        <button className="flex items-center gap-2 bg-black text-white px-5 py-3 rounded-xl hover:opacity-90"
+        onClick={()=>{
+          setIsOpen(true);
+        }}
+        >
           <Upload size={18} />
           Upload Video
         </button>
@@ -64,7 +74,7 @@ export default function Dashboard() {
           value={pendingDoubts?.length}
           icon={<Clock size={22} />}
           bgColor="bg-orange-100"
-           bg="bg-white"
+          bg="bg-white"
           iconColor="text-orange-600"
         />
 
@@ -104,6 +114,14 @@ export default function Dashboard() {
         <p className="text-gray-500">Your latest uploaded lecture videos</p>
         </div>
       </div>
+      </div>
+      <div>
+      <UploadVideoModal
+      isOpen={isOpen}
+      onClose={()=>{
+        setIsOpen(false)
+      }}
+      />
       </div>
     </>
   );

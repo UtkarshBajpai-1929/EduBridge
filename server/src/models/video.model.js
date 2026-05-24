@@ -12,20 +12,14 @@ const videoSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     class: {
       type: String,
       required: true,
     },
 
-    subject: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
-      required: true,
-    },
-
     topic: {
       type: String,
+      required: true,
     },
 
     title: {
@@ -35,6 +29,7 @@ const videoSchema = new mongoose.Schema(
 
     description: {
       type: String,
+      required: true,
     },
 
     videoUrl: {

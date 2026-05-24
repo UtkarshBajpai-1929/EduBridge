@@ -43,9 +43,10 @@ const TeacherDoubts = () => {
 
   return (
     <div className='px-4 pb-8 min-h-dvh flex flex-col gap-4 bg-gray-100 relative'>
+      <div className='flex flex-col'>
       <h1 className='text-2xl font-bold'>Student Doubts</h1>
       <p className='text-gray-400'>View students doubts and responses</p>
-
+      </div>
       <div className='px-4 w-full flex justify-start gap-6 items-center shadow-sm rounded py-4 bg-white'>
         <div className='w-full flex items-center gap-2 bg-gray-200 p-2 rounded'>
           <Search size={18} />

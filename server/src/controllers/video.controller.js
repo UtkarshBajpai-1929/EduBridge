@@ -5,25 +5,24 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 export const uploadVideo = asyncHandler(async (req, res) => {
-  const { title, description, class: className, subject, topic } = req.body;
+  const { title, description, class: className, topic } = req.body;
 
-  if (!title || !className || !subject) {
+  if (!title || !className || !topic || !description) {
     throw new apiError(400, "Required fields missing");
   }
-
-  const videoFile = req.files.videoFile[0];
-
-  if (!videoFile) {
+  if (!req.files?.video?.length) {
     throw new apiError(400, "Video file required");
   }
 
-  const uploadedVideo = await uploadOnCloudinary(videoFile.path);
-
+  const uploadedVideo = await uploadOnCloudinary(req.files.video[0].path);
+  if (!uploadedVideo?.url) {
+    throw new apiError(500, "Video upload failed");
+  }
+ 
   const video = await Video.create({
     title,
     description,
     class: className,
-    subject,
     topic,
     teacher: req.user._id,
     schoolId: req.user.schoolId,
@@ -35,27 +34,40 @@ export const uploadVideo = asyncHandler(async (req, res) => {
     .json(new apiResponse(201, video, "Video uploaded successfully"));
 });
 
-export const getVideos = asyncHandler(async (req, res) => {
-  const { class: className, subject } = req.query;
+export const getStudentVideos = asyncHandler(async (req, res) => {
+  const className = req.query.class || req.user?.className;
 
-  if (!className || !subject) {
-    throw new apiError(400, "Class and subject are required");
+  if (!className) {
+    throw new apiError(400, "Class is required");
   }
 
   const videos = await Video.find({
     class: className,
-    subject,
     schoolId: req.user.schoolId
   })
     .populate("teacher", "name")
-    .populate("subject", "name")
     .sort({ createdAt: -1 });
 
   return res
     .status(200)
     .json(new apiResponse(200, videos, "Videos fetched successfully"));
 });
+export const getTeacherVideos = asyncHandler(async (req, res) => {
+  if(!req.user){
+    throw new apiError(401, "Unauthorsed error")
+  }
 
+  const videos = await Video.find({
+    teacher: req.user._id,
+    schoolId: req.user.schoolId
+  })
+    .populate("teacher", "name")
+    .sort({ createdAt: -1 });
+
+  return res
+    .status(200)
+    .json(new apiResponse(200, videos, "Videos fetched successfully"));
+});
 export const getSingleVideo = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
