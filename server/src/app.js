@@ -10,8 +10,7 @@ import {responseRouter} from "./routes/responseRoutes.js";
 const app = express();
 
 app.use(cors({
-  origin:"http://localhost:5173",
-  credentials: true
+  origin: "*"
 }));
 app.use(cookieParser());
 app.use(express.json());
