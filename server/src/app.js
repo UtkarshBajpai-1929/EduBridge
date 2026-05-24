@@ -10,7 +10,11 @@ import {responseRouter} from "./routes/responseRoutes.js";
 const app = express();
 
 app.use(cors({
-  origin: "*"
+  origin: [
+    "http://localhost:5173",
+    "https://edubridge-lemon-iota.vercel.app/"
+  ],
+  credentials: true
 }));
 app.use(cookieParser());
 app.use(express.json());
