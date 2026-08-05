@@ -9,21 +9,8 @@ import { doubtRouter } from "./routes/doubtRoutes.js";
 import {responseRouter} from "./routes/responseRoutes.js";
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://edubridge-lemon-iota.vercel.app",
-  "http://localhost",
-  "capacitor://localhost",
-];
-
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: true,
   credentials: true,
 }));
 app.use(cookieParser());
